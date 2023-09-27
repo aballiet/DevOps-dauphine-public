@@ -33,7 +33,7 @@ https://cloud.google.com/docs/terraform/resource-management/managing-infrastruct
 
 ### Utiliser terraform et cloud build pour déployer une application
 
-Reprendre le code de l'application Node utilisée dans le TP 1.
+Reprendre le code de l'application Node utilisée dans le TP 1 :
 
 - App.js :
 
@@ -79,4 +79,4 @@ Votre pipeline Cloud Build doit :
 -> Appliquer les changements de votre code terraform sur votre projet
 -> Build et push l'image docker sur une repo Artifact Registry
 
-Bonus : déployer l'image docker sur une instance cloud run définie en code terraform
+Bonus : déployer l'image docker sur une instance cloud run définie en code terraform. Faites attention au mapping des ports 😉 : https://cloud.google.com/run/docs/container-contract?hl=fr
