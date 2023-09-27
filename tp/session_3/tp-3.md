@@ -79,4 +79,4 @@ Votre pipeline Cloud Build doit :
 -> Appliquer les changements de votre code terraform sur votre projet
 -> Build et push l'image docker sur une repo Artifact Registry
 
-Bonus : déployer l'image docker sur une instance cloud run définie en code terraform. Faites attention au mapping des ports 😉 : https://cloud.google.com/run/docs/container-contract?hl=fr
+Bonus : déployer l'image docker sur une instance [Cloud Run](https://cloud.google.com/run?hl=fr) définie en code terraform. Faites attention au mapping des ports 😉 : https://cloud.google.com/run/docs/container-contract?hl=fr
