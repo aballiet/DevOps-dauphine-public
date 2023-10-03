@@ -1,9 +1,8 @@
-# Pipeline CloudBuild pour automatiser le déploiement de ressources avec Terraform sur GCP
+# Pipeline Cloud Build pour automatiser le déploiement de ressources avec Terraform sur GCP
 
 Cet exemple permet de déployer sur un projet GCP les ressources suivantes :
 - `google_project_service` => Les APIs Google nécessaire à l'utilisation des resources
 - `google_artifact_registry_repository` => dépôt docker permettant de stocker des images (comme DockerHub)
-
 
 ## Pré-requis :
 Changer les valeurs suivantes dans ce code pour les adapter à votre configuration :
@@ -71,6 +70,17 @@ Afin de ne pas soumettre ce dossier, on définit le fichier `.gcloudignore` qui 
 .terraform
 ```
 
+## Erreur : Échec du déclenchement de la compilation: File */cloudbuild.yaml not found
+
+![error_no_config_cloudbuild](./images/cloudbuild_config_not_found.png)
+
+=> Si on utilise un trigger / déclencheur CloudBuild:
+
+Pour le fichier `cloudbuil.yaml` :
+![cloudbuild_path](images/cloubuild_file_path.png)
+
+-> spécifier le bons chemin relatif à utiliser qui pointe vers votre `cloudbuil.yaml`
+
 ## Erreur : │ No configuration files
 
 ![error_no_config_files](images/error_no_configuration_files.png)
@@ -84,4 +94,29 @@ Pour mieux comprendre où se lance CloudBuild, on peut rajouter une étape qui a
     script: |
       #!/usr/bin/env bash
       echo $(ls)
+```
+
+=> Si on lance avec `gcloud builds submit --config cloudbuild.yaml`, s'assurer qu'on fait la commande au bon endroit
+=> Si on utilise un déclencheur, faire en sorte d'être dans le bon dossier pour faire nos commandes `terraform`
+
+Pour changed de dossier, on peut faire comme vu au TP 3
+
+```YAML
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      cd MON_CHEMIN/RELATIF/
+      terraform init
+```
+
+Ou alors utiliser le mot clé `dir` :
+
+```YAML
+  - id: 'terraform init'
+    name: 'hashicorp/terraform:1.0.0'
+    dir: MON_CHEMIN/RELATIF
+    script: terraform init
 ```
