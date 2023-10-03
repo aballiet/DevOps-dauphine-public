@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "testbucket-dauphine-devops"
+    bucket = "terraform-test-cloudbuild-0098"
   }
 
   required_version = ">= 1.0"

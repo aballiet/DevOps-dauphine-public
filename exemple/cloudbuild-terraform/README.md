@@ -5,6 +5,13 @@ Cet exemple permet de déployer sur un projet GCP les ressources suivantes :
 - `google_artifact_registry_repository` => dépôt docker permettant de stocker des images (comme DockerHub)
 
 ## Pré-requis :
+
+Avoir un bucket prêt à accueillir notre state, pour le créer : 
+  - soit directement sur l'interface Web GCP
+  - soit en faisant la commande (en choisissant un nom unique de bucket) : `gsutil mb gs://MON_NOM_DE_BUCKET` (dans mon cas j'ai fait `gs://terraform-test-cloudbuild-0098`)
+  - soit en utilisant terraform en local sans configuration backend `gcs`
+  (le code pour la création du bucket est commenté dans `main.tf`)
+
 Changer les valeurs suivantes dans ce code pour les adapter à votre configuration :
 
 `backend.tf` :
@@ -24,9 +31,7 @@ provider "google" {
   }
 ```
 
-=> Renseigner un nom de bucket que vous avez crée :
-  - soit directement sur l'interface Web GCP
-  - soit en utilisant terraform en local sans configuration backend `gcs` (le code pour la création du bucket est commenté dans `main.tf`)
+=> Renseigner un nom de bucket que vous avez crée précédemment
 
 ## Debug en case de problème
 
