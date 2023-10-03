@@ -21,7 +21,7 @@ resource "google_artifact_registry_repository" "my-repo" {
   depends_on = [ google_project_service.artifact ]
 }
 
-resource "google_storage_bucket" "default" {
-    name          = "testbucket-dauphine-devops" # A changer: le nom doit être unique
-    location      = "US"
-}
+# resource "google_storage_bucket" "default" {
+#     name          = "testbucket-dauphine-devops" # A changer: le nom doit être unique
+#     location      = "US"
+# }

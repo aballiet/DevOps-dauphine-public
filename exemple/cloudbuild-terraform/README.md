@@ -4,20 +4,50 @@ Cet exemple permet de déployer sur un projet GCP les ressources suivantes :
 - `google_project_service` => Les APIs Google nécessaire à l'utilisation des resources
 - `google_artifact_registry_repository` => dépôt docker permettant de stocker des images (comme DockerHub)
 
+
+## Pré-requis :
+Changer les valeurs suivantes dans ce code pour les adapter à votre configuration :
+
+`backend.tf` :
+
+
+```hcl
+provider "google" {
+    project = "devops-dauphine-psl"
+}
+```
+
+=> Remplacer `devops-dauphine-psl` par le nom de votre projet GCP
+
+```hcl
+  backend "gcs" {
+    bucket = "testbucket-dauphine-devops"
+  }
+```
+
+=> Renseigner un nom de bucket que vous avez crée :
+  - soit directement sur l'interface Web GCP
+  - soit en utilisant terraform en local sans configuration backend `gcs` (le code pour la création du bucket est commenté dans `main.tf`)
+
 ## Debug en case de problème
 
-### PERMISSION_DENIED, rôles manquants dans CloudBuild
+### AUTH_PERMISSION_DENIED, rôles manquants dans CloudBuild
+
+![error_permission_denied](./images/error_permission_denied.png)
+
+Erreur contenant : `googleapi: Error 403: Permission denied`
 
 [Comme pour le TP3](https://cloud.google.com/docs/terraform/resource-management/managing-infrastructure-as-code?hl=fr#granting_permissions_to_your_cloud_build_service_account), nous devons donner les droits à CloudBuild de créer des ressources sur notre projet Google.
 En effet, par défault CloudBuild n'a pas les autorisation pour faire les appels APIs nécessaires à la création de ressources.
 
 
-Pour faire simple, on donne tous les droits à CloudBuild sur notre projet Google avec le rôle `roles/editor`
+Pour faire simple, on donne tous les droits à CloudBuild sur notre projet Google avec le rôle `roles/editor`.
+
+Utilisez les 3 commandes suivantes :
 
 ```bash
 PROJECT_ID=$(gcloud config get-value project)
 ```
-
 
 ```bash
 CLOUDBUILD_SA="$(gcloud projects describe $PROJECT_ID \
@@ -33,11 +63,25 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 ![error_config_changed](images/error_backend_configuration_changed.png)
 
-
-Attention, si vous utilisez directement la commande : `gcloud builds submit --config cloudbuild.yaml`, il faut veiller à ne pas envoyer le dossier `.terraform` ce qui peut perturber CloudBuild.
+Attention, si vous utilisez directement la commande : `gcloud builds submit --config cloudbuild.yaml`, il faut veiller à ne pas envoyer le dossier `.terraform` (généré automatiquement si vous avez utilisé terraform directement sans cloudbuild) ce qui perturbe CloudBuild.
 
 Afin de ne pas soumettre ce dossier, on définit le fichier `.gcloudignore` qui contient l'exclusion :
 
 ```bash
 .terraform
+```
+
+## Erreur : │ No configuration files
+
+![error_no_config_files](images/error_no_configuration_files.png)
+
+S'assurer que cloudbuild s'execute bien où on le souhaite = à côté de nos fichiers terraform (`main.tf`).
+
+Pour mieux comprendre où se lance CloudBuild, on peut rajouter une étape qui affiche les fichiers courants :
+
+```YAML
+  - name: 'bash'
+    script: |
+      #!/usr/bin/env bash
+      echo $(ls)
 ```
