@@ -104,5 +104,7 @@
 
     Compose télécharge l'image Redis, crée une image pour votre code et démarre les services que vous avez définis. Dans ce cas, le code est copié de manière statique dans l’image au moment de la construction.
 
+1. Faites la commande plusieurs fois et observer l'incrément : `curl http://localhost:8000/` 
+
 ## Partie 2 : Kubernetes
 
