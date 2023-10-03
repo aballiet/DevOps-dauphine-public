@@ -33,7 +33,7 @@ provider "google" {
 
 => Renseigner un nom de bucket que vous avez crée précédemment
 
-## Debug en case de problème
+## Debug en cas de problème
 
 ### AUTH_PERMISSION_DENIED, rôles manquants dans CloudBuild
 
