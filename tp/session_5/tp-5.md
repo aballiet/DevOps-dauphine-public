@@ -104,7 +104,25 @@
 
     Compose télécharge l'image Redis, crée une image pour votre code et démarre les services que vous avez définis. Dans ce cas, le code est copié de manière statique dans l’image au moment de la construction.
 
-1. Faites la commande plusieurs fois et observer l'incrément : `curl http://localhost:8000/` 
+1. Faites la commande plusieurs fois et observer l'incrément : `curl http://localhost:8000/`
 
 ## Partie 2 : Kubernetes
 
+### Introduction
+
+Faites vos premiers pas avec le tutoriel de Google pour GKE (Kubernetes) : https://cloud.google.com/kubernetes-engine/docs/quickstarts/deploy-app-container-image?hl=fr#python
+
+
+## Déploiement d'une application microservices : serveur PHP et Redis
+
+https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook?hl=fr
+
+### Aller plus loin : utiliser helm pour déployer ses applications
+
+Helm permet de déployer plus facilement les applications multi-services sur Kubernetes.
+
+Helm dispose d'un terraform provider : https://registry.terraform.io/providers/hashicorp/helm/latest/docs
+
+Il utilise alors l'API kubernetes pour créer les ressources dans le cluster.
+
+https://getbetterdevops.io/terraform-with-helm/ (en anglais)
