@@ -122,9 +122,7 @@ Notre but, ne l'oublions pas est de déployer wordpress sur Cloud Run !
 
       metadata {
          annotations = {
-         "autoscaling.knative.dev/maxScale"      = "1000"
-         "run.googleapis.com/cloudsql-instances" = "main-instance"
-         "run.googleapis.com/client-name"        = "terraform"
+               "run.googleapis.com/cloudsql-instances" = "VOTRE_IDENTIFIANT_DE_PROJET:us-central1:main-instance"
          }
       }
    }
